@@ -1,0 +1,74 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@model IPagedList<E_Commerce_Site.Models.SubCategory>
+<br />
+<p>
+    @Html.ActionLink("Create New Sub-Category", "Create", null, new { @class = "btn btn-warning" })
+</p>
+
+<p>
+    @using (Html.BeginForm("Index", "SubCategories", FormMethod.Get))
+    {
+        <b>Search by:</b><br />
+        @Html.RadioButton("searchBy", "SubCategoryName", true)<text>Sub-Category Name </text><br />
+
+        @Html.RadioButton("searchBy", "SubCategoryId")<text>Sub-Category Id </text><br />
+            @Html.RadioButton("searchBy", "CategoryName")<text>Category Name </text><br />
+            <div class="col-md-12">
+                @Html.TextBox("search")<input type="submit" value="Search" />
+            </div>
+    }
+
+
+</p>
+
+<table class="table table-bordered  table-hover table-responsive">
+    <tr>
+        <th>
+            @Html.ActionLink("Sub-Category Id", "Index", new { sortBy = ViewBag.SortSubCategoryIdParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Sub-Category Name", "Index", new { sortBy = ViewBag.SortSubCategoryNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Category Name", "Index", new { sortBy = ViewBag.SortCategoryNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3"> No rows matched search criteria   </td>
+        </tr>
+    }
+
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubCategoryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SubCategoryName)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Category.CategoryName, "Details", "Categories", new { id = item.CategoryId }, new { @style = "color:blue;" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SubCategoryId }, new { @style = "color:green;" })
+                    @Html.ActionLink("Details", "Details", new { id = item.SubCategoryId }, new { @style = "color:blue;" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SubCategoryId }, new { @style = "color:red;" })
+                </td>
+            </tr>
+        }
+    }
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["Search"], sortBy = Request["sortBy"] }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })
+

@@ -1,0 +1,186 @@
+﻿@model E_Commerce_Site.Models.Product
+
+
+<meta name="viewport" content="width=device-width" />
+<title>Product Details</title>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Product Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceInr)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceInr)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceCad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceCad)
+        </dd>
+
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingCost)
+        </dd>
+        <dt>
+            Product Description
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+
+        <dt>
+            Category Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.Category.CategoryName)
+        </dd>
+        <dt>
+            Sub-Category Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory.SubCategoryName)
+        </dd>
+        <dt>
+            Discount Percent
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Discount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVisibleOnHome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsVisibleOnHome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
+
+        <dt class="  col-md-12">
+            <b>Tags</b>
+        </dt>
+
+        <dd>
+            <div>
+                @for (int i = 0; i < (Model.TagList.Count()); i++)
+                {
+                    @Html.DisplayFor(modelItem => Model.TagList.ElementAt(i).TagName)
+
+                    if (i == Model.TagList.Count() - 1)
+                    {
+                        break;
+
+                    }
+                    <span>,</span>
+                }
+
+            </div>
+        </dd>
+
+
+
+        @for (int i = 0; i < Model.ReviewList.Count(); i++)
+            {
+            <dt>
+                Review @(i + 1) :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReviewList.ElementAt(i).ReviewString)-
+                @Html.DisplayFor(model => model.ReviewList.ElementAt(i).Customer.CustomerName)
+
+
+            </dd>}
+
+
+
+
+        @if (Model.ImageList != null)
+            {
+                for (int i = 0; i < Model.ImageList.Count(); i++)
+                {
+                <dt>
+
+                    @Html.Label("Color:")
+                </dt>
+                <dd>
+
+                    @foreach (var item in ViewBag.ColorNames as Dictionary<int, String>)
+                    {
+                        if (item.Key == Model.ImageList.ElementAt(i).ColorId)
+                        {
+                            <span><b> @item.Value </b></span>}
+                    }
+                </dd>
+
+
+                <dt>
+                    @Html.Label("Angle:")
+                </dt>
+                <dd>
+                    @Html.Label(@Model.ImageList[i].ImageAngle)
+                </dd>
+                <dt>
+                </dt>
+                <dd>
+                    <img src="@Model.ImageList[i].Address" height="200" />
+                </dd>
+
+
+            }
+        }
+
+    </dl>
+</div>
+
+<br /><br />
+<p>
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) <br /><br />
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

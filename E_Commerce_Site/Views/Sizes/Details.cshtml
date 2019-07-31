@@ -1,0 +1,25 @@
+﻿@model E_Commerce_Site.Models.Size
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Size Details</h2>
+
+<div>
+  
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SizeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SizeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SizeId }) <br/><br/>
+    @Html.ActionLink("Back to List", "Index")
+</p>

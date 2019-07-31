@@ -1,0 +1,67 @@
+﻿@model E_Commerce_Site.Models.Invoice
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PreparePrint</title>
+</head>
+<body>
+  
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Orders.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Printed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Canceled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Updated)
+            </th>
+    
+
+
+            <th></th>
+        </tr>
+    
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Orders.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Printed)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Canceled)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Updated)
+            </td>
+            
+        </tr>
+    
+    
+    </table>
+</body>
+</html>

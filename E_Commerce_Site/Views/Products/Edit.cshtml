@@ -1,0 +1,194 @@
+﻿@model E_Commerce_Site.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@Styles.Render("~/content/selectize")
+@Scripts.Render("~/bundles/selectize")
+
+
+<h2>Edit Product</h2>
+
+@using (Html.BeginForm("Edit", "Products", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ProductId)
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.ProductName, "Product Name", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.ActionLink("Add Image", "AddImageEdit", Model, new { @class = "btn btn-success col-md-12" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.PriceCad, "Canadian Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.PriceCad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PriceCad, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.PriceInr, "Indian Price", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.PriceInr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PriceInr, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.ProductDescription, "Product Description", htmlAttributes: new { @class = "control-label" })
+            </div>
+
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.ProductDescription, 8, 60, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ProductDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+
+                @Html.LabelFor(model => model.ShippingCost, "Shipping Cost", htmlAttributes: new { @class = "control-label" })
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.ShippingCost, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ShippingCost, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Discount, "Discount", htmlAttributes: new { @class = "control-label" })
+
+
+            </div>
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Discount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.SubCategoryId, "Sub-Category", htmlAttributes: new { @class = "control-label" })
+
+            </div>      <div class="col-md-12">
+                @Html.DropDownList("SubCategoryId", null, htmlAttributes: new { @class = "demo-default", id = "SubCategoryId" })
+                @Html.ValidationMessageFor(model => model.SubCategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.IsVisibleOnHome, "Is Visible on Homepage?", htmlAttributes: new { @class = "control-label " })
+            </div>
+            <div class="checkbox col-md-2">
+                @Html.EditorFor(model => model.IsVisibleOnHome)
+                @Html.ValidationMessageFor(model => model.IsVisibleOnHome, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group  col-md-12">
+            <div class="control-group">
+                <label for="TagListSelect">Choose Tags:</label>
+                <select id="TagListSelect" name="TagListSelect" multiple="multiple" class="demo-default" style="width:100%" placeholder="Select a tag...">
+
+                    @for (int i = 0; i < Model.TagList.Count(); i++)
+                {
+                        <option value="@Model.TagList[i].TagId">@Model.TagList[i].TagName</option>}
+
+                </select>
+            </div>
+        </div>
+
+        <hr />
+        @if (Model.ImageList != null)
+        {
+            for (int i = 0; i < Model.ImageList.Count(); i++)
+            {<div class="col-md-12" style="padding-bottom:185px">
+           
+            <div class="col-md-6">
+                @Html.Label("Color Name:")
+                
+                @foreach (var item in ViewBag.ColorNames as Dictionary<int, String>)
+                {
+                    if (item.Key == Model.ImageList.ElementAt(i).ColorId)
+                    {
+                        <span> @item.Value </span>}
+                }
+                
+                <br />
+                @Html.Label("Image Angle:") @Model.ImageList[i].ImageAngle<br /><br />
+                @if (Model.ImageList.Count() != 1)
+                {
+                    @Html.ActionLink("Delete", "DeleteImageEdit", new { productId = Model.ProductId, imgId = Model.ImageList.ElementAt(i).ImageId }, new { @class = "btn btn-danger" })<br />
+
+                }
+            </div>
+
+            <div class="col-md-6"><img src="@Model.ImageList[i].Address" height="175" /> </div> <br />
+        </div>
+            }
+        }
+
+
+
+        <div class="form-group">
+            <div class=" col-md-12">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<script>
+    $('#TagListSelect').selectize({
+        maxItems: 99
+    });
+    $('#SubCategoryId').selectize({
+        allowEmptyOption: false,
+        maxItems: 1
+
+
+
+
+    });
+
+
+
+</script>

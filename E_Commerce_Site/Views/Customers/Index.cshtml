@@ -1,0 +1,147 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@model IPagedList<E_Commerce_Site.Models.Customer>
+<br />
+
+<p>
+    @Html.ActionLink("Create New Customer", "Create", null, new { @class = "btn btn-warning" })
+</p>
+
+
+
+<p>
+    @using (Html.BeginForm("Index", "Customers", FormMethod.Get))
+    {
+        <b>Search by:</b><br />
+
+        <div>
+            @Html.RadioButton("searchBy", "CustomerName", true)<text>CustomerName </text>
+        </div>
+        <div>
+            @Html.RadioButton("searchBy", "CustomerId")<text>Customer Id </text>
+        </div>       
+            <div>
+                @Html.RadioButton("searchBy", "Address")<text>Address </text>
+            </div>
+            <div>
+                @Html.RadioButton("searchBy", "PostalCode")<text>Postal Code</text>
+            </div>
+            <div>
+                @Html.RadioButton("searchBy", "PhoneNumber")<text>Phone Number </text>
+            </div>
+
+
+            <div class="col-md-12">
+           @Html.TextBox("search")<input type="submit" value="Search" />
+            </div>
+
+    }
+
+</p>
+
+
+
+
+
+<table class="table table-bordered  table-hover table-responsive">
+    <tr>
+        <th>
+            @Html.ActionLink("Customer Id", "Index", new { sortBy = ViewBag.SortCustomerIdParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Customer Name", "Index", new { sortBy = ViewBag.SortCustomerNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Address", "Index", new { sortBy = ViewBag.SortAddressParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Postal Code", "Index", new { sortBy = ViewBag.SortPostalCodeParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Country", "Index", new { sortBy = ViewBag.SortCountryParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("City", "Index", new { sortBy = ViewBag.SortCityParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("State", "Index", new { sortBy = ViewBag.SortStateParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Phone Number", "Index", new { sortBy = ViewBag.SortPhoneNumberParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Email", "Index", new { sortBy = ViewBag.SortEmailParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Date of Birth", "Index", new { sortBy = ViewBag.SortDateOfBirthParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Time Created", "Index", new { sortBy = ViewBag.SortTimeCreatedParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Time Updated", "Index", new { sortBy = ViewBag.SortTimeUpdatedParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3"> No rows matched search criteria   </td>
+        </tr>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
+                    @Html.ActionLink(item.CustomerName, "Details", "Customers", new { id = item.CustomerId }, new { @style = "color:blue;" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Updated)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }, new { @style = "color:green;" }) 
+                    @Html.ActionLink("Details", "Details", new { id = item.CustomerId }, new { @style = "color:blue;" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId }, new { @style = "color:red;" })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"], sortBy = Request["sortBy"] }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })

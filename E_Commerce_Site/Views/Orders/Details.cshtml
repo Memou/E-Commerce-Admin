@@ -1,0 +1,100 @@
+﻿@model E_Commerce_Site.Models.Order
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Order Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Customer.CustomerName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Customer.CustomerName)
+            </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NetCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NetCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TaxCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TaxCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShippingCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShippingCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderNotes)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderNotes)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.OrderId }) <br /><br />
+    @Html.ActionLink("Back to List", "Index")
+</p>

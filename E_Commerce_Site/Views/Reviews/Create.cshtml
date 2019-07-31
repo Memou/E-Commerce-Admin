@@ -1,0 +1,78 @@
+﻿@model E_Commerce_Site.Models.Review
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Review</h2>
+
+@Styles.Render("~/content/selectize")
+@Scripts.Render("~/bundles/selectize")
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.ReviewString, "Review", htmlAttributes: new { @class = "control-label" })
+            </div>        <div class="col-md-12">
+                @Html.TextAreaFor(model => model.ReviewString, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ReviewString, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.ProductId, "Product Name", htmlAttributes: new { @class = "control-label " })
+            </div>        <div class="col-md-12">
+                @Html.DropDownList("ProductId", null, htmlAttributes: new { @class = "demo-default", required = "Select Product Name",id= "ProductId" })
+                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.CustomerId, "Customer Name", htmlAttributes: new { @class = "control-label ", required = "Select Csustomer Name" })
+            </div>        <div class="col-md-12">
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "demo-default", id= "CustomerId" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.LabelFor(model => model.Rating, "Rating (0-5)", htmlAttributes: new { @class = "control-label ", required = "Select Rating" })
+            </div>        <div class="col-md-12">
+                @Html.EditorFor(model => model.Rating, new { htmlAttributes = new { @class = "form-control" ,max ="5",min = "0" } })
+                @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <input type="submit" value="Create" class="btn btn-success"  />
+        </div>
+        </div>
+  
+}
+<div class="form-group col-md-6">
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-warning" })
+</div>
+<script>
+    $('#CustomerId').selectize({
+        maxItems: 1,
+        allowEmptyOption: false,
+
+    });
+    $('#ProductId').selectize({
+        allowEmptyOption: false,
+        maxItems: 1
+    });
+
+</script>

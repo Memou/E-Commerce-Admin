@@ -1,0 +1,158 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Admin</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="~/Content/bootstrap.css" type="text/css">
+    <!-- Our Custom CSS -->
+    <link href="~/Content/AdminStyle.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+
+                <li class="active">
+                    <a href="#ProductsSubmenu" data-toggle="collapse" aria-expanded="false">Products</a>
+                    <ul class="collapse list-unstyled" id="ProductsSubmenu">
+                        <li>@Html.ActionLink("View/Edit/Delete Products", "Index", "Products")</li>
+                        <li>@Html.ActionLink("Add Products", "Create", "Products")</li>
+                    </ul>
+                </li>
+
+              
+                    <li class="active">
+                        <a href="#InventorySubmenu" data-toggle="collapse" aria-expanded="false">Inventory</a>
+                        <ul class="collapse list-unstyled" id="InventorySubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Inventory", "Index", "Inventories")</li>
+                            <li>@Html.ActionLink("Add Inventory", "Create", "Inventories")</li>
+                        </ul>
+                    </li>
+
+
+                    <li>
+                        <a href="#OrdersSubmenu" data-toggle="collapse" aria-expanded="false">Orders</a>
+                        <ul class="collapse list-unstyled" id="OrdersSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Orders", "Index", "Orders")</li>
+                            <li>@Html.ActionLink("Add Orders", "Create", "Orders")</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#InvoicesSubmenu" data-toggle="collapse" aria-expanded="false">Invoices</a>
+                        <ul class="collapse list-unstyled" id="InvoicesSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Invoices", "Index", "Invoices")</li>
+                            <li>@Html.ActionLink("Add Invoices", "Create", "Invoices")</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#SizesSubmenu" data-toggle="collapse" aria-expanded="false">Sizes</a>
+                        <ul class="collapse list-unstyled" id="SizesSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Sizes", "Index", "Sizes")</li>
+                            <li>@Html.ActionLink("Add Sizes", "Create", "Sizes")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#ColorsSubmenu" data-toggle="collapse" aria-expanded="false">Colors</a>
+                        <ul class="collapse list-unstyled" id="ColorsSubmenu">
+                            <li>@Html.ActionLink("View/Edit Colors", "Index", "Colors")</li>
+                            <li>@Html.ActionLink("Add Colors", "Create", "Colors")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#ReviewsSubmenu" data-toggle="collapse" aria-expanded="false">Reviews</a>
+                        <ul class="collapse list-unstyled" id="ReviewsSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Reviews", "Index", "Reviews")</li>
+                            <li>@Html.ActionLink("Add Reviews", "Create", "Reviews")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#CustomersSubmenu" data-toggle="collapse" aria-expanded="false">Customers</a>
+                        <ul class="collapse list-unstyled" id="CustomersSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Customers", "Index", "Customers")</li>
+                            <li>@Html.ActionLink("Add Customers", "Create", "Customers")</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#ProductCategoriesSubmenu" data-toggle="collapse" aria-expanded="false">Product Categories</a>
+                        <ul class="collapse list-unstyled" id="ProductCategoriesSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Categories", "Index", "Categories")</li>
+                            <li>@Html.ActionLink("Add Categories", "Create", "Categories")</li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#ProductSubCategoriesSubmenu" data-toggle="collapse" aria-expanded="false">Product Sub-Categories</a>
+                        <ul class="collapse list-unstyled" id="ProductSubCategoriesSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Sub-Categories", "Index", "SubCategories")</li>
+                            <li>@Html.ActionLink("Add Sub-Categories", "Create", "SubCategories")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#ProductTagsSubmenu" data-toggle="collapse" aria-expanded="false">Product Tags</a>
+                        <ul class="collapse list-unstyled" id="ProductTagsSubmenu">
+                            <li>@Html.ActionLink("View/Edit/Delete Tags", "Index", "Tags")</li>
+                            <li>@Html.ActionLink("Add Tags", "Create", "Tags")</li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+
+        </nav>
+
+
+        <!-- Page Content Holder -->
+        <div id="content">
+
+        <!--    <nav class="navbar navbar-default">-->
+                 <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+                        <i class="glyphicon glyphicon-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                </div>
+        <!--     </nav> -->
+            @RenderBody()
+        </div>
+    </div>
+
+
+
+
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+</body>
+</html>

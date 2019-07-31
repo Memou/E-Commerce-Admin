@@ -1,0 +1,118 @@
+﻿
+@using PagedList;
+@using PagedList.Mvc;
+
+
+@model IPagedList<E_Commerce_Site.Models.Review>
+<br />
+<p>
+    @Html.ActionLink("Create New Review", "Create", null, new { @class = "btn btn-warning" })
+</p>
+
+<p>
+    @using (Html.BeginForm("Index", "Reviews", FormMethod.Get))
+    {
+        <b>Search by:</b><br />
+        @Html.RadioButton("searchBy", "CustomerId")<text>Customer Id</text><br />
+        @Html.RadioButton("searchBy", "CustomerName")<text>Customer Name</text><br />
+        @Html.RadioButton("searchBy", "ProductId")<text>Product Id</text><br />
+        @Html.RadioButton("searchBy", "ProductName", true)<text>Product Name</text><br />
+        @Html.RadioButton("searchBy", "ReviewId")<text>Review Id</text><br />
+        @Html.RadioButton("searchBy", "Review")<text>Review</text><br />
+
+        <div class="col-md-12">
+            @Html.TextBox("search")<input type="submit" value="Search" />
+        </div>
+    }
+
+
+</p>
+
+<table class="table table-bordered  table-hover table-responsive">
+    <tr>
+        <th>
+            @Html.ActionLink("Review Id", "Index", new { sortBy = ViewBag.SortReviewIdParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Review", "Index", new { sortBy = ViewBag.SortReviewParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Rating", "Index", new { sortBy = ViewBag.SortRatingParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Customer Id", "Index", new { sortBy = ViewBag.SortCustomerIdParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Customer Name", "Index", new { sortBy = ViewBag.SortCustomerNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Product Id", "Index", new { sortBy = ViewBag.SortProductIdParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Product Name", "Index", new { sortBy = ViewBag.SortProductNameParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+
+        <th>
+            @Html.ActionLink("Time Created", "Index", new { sortBy = ViewBag.SortTimeCreatedParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+        <th>
+            @Html.ActionLink("Time Updated", "Index", new { sortBy = ViewBag.SortTimeUpdatedParameter, searchBy = Request.QueryString["searchBy"], search = Request["search"] }, new { style = "color:green" })
+        </th>
+
+
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+        <tr>
+            <td colspan="3"> No rows matched search criteria   </td>
+        </tr>
+    }
+
+    else
+    {
+
+
+        foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewString)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerId)
+            </td>
+            <td>
+                @Html.ActionLink(item.Customer.CustomerName, "Details", "Customers", new { id = item.CustomerId }, new { @style = "color:blue;" })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.ProductId)
+            </td>
+            <td>
+                @Html.ActionLink(item.Product.ProductName, "Details", "Products", new { id = item.Product.ProductId }, new { @style = "color:blue;" })
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Updated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ReviewId }, new { @style = "color:green;" })
+                @Html.ActionLink("Details", "Details", new { id = item.ReviewId }, new { @style = "color:blue;" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ReviewId }, new { @style = "color:red;" })
+            </td>
+        </tr>
+        }
+    }
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["Search"], sortBy = Request["sortBy"] }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true, DisplayItemSliceAndTotal = true })

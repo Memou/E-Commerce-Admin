@@ -1,0 +1,25 @@
+﻿@model E_Commerce_Site.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Category Details</h2>
+
+<div>
+   
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) <br /><br />
+    @Html.ActionLink("Back to List", "Index")
+</p>
