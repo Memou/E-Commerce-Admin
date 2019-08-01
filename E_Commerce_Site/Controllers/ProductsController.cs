@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using E_Commerce_Site.Context;
+
 using E_Commerce_Site.Models;
 using PagedList;
 using System.Web;
@@ -24,10 +25,15 @@ namespace E_Commerce_Site.Controllers
             //Image cache emptying
             TempData.Remove("ImageList");
 
-            //Search
 
             var products = db.Products.AsQueryable();
 
+
+            //Search Service --To be Done
+
+            //var products = SearchServiceForProducts.searchforProduct(searchBy,search);
+
+            //SEARCH
             if (searchBy == "ProductId")
             {
                 products = products.Where(x => x.ProductId.ToString().StartsWith(search) || search == null);
@@ -49,10 +55,10 @@ namespace E_Commerce_Site.Controllers
 
             }
 
+           
+            //Sort Service --To be Done
 
-
-            //sort
-
+            //SORT
             ViewBag.SortProductIdParameter = sortBy == "ProductId" ? "ProductId Desc" : "ProductId";
             ViewBag.SortProductNameParameter = sortBy == "ProductName" ? "ProductName Desc" : "ProductName";
             ViewBag.SortProductDescriptionParameter = sortBy == "ProductDescription" ? "ProductDescription Desc" : "ProductDescription";
@@ -67,9 +73,6 @@ namespace E_Commerce_Site.Controllers
             ViewBag.SortDiscountParameter = sortBy == "Discount" ? "Discount Desc" : "Discount";
             ViewBag.SortOnHomePageParameter = sortBy == "OnHomePage" ? "OnHomePage Desc" : "OnHomePage";
             ViewBag.SortRatingParameter = sortBy == "Rating" ? "Rating Desc" : "Rating";
-
-
-
 
 
             switch (sortBy)
@@ -151,7 +154,7 @@ namespace E_Commerce_Site.Controllers
                     break;
             }
 
-           //products.Include(p => p.Image).Include(p => p.SubCategory);
+            //products.Include(p => p.Image).Include(p => p.SubCategory);
             return View(products.ToPagedList(page ?? 1, 50));
 
 
@@ -166,8 +169,8 @@ namespace E_Commerce_Site.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-     
-        
+
+
             Product product = db.Products.Find(id);
 
             if (product == null)
@@ -181,20 +184,21 @@ namespace E_Commerce_Site.Controllers
 
             for (int i = 0; i < imageList.Count; i++)
             {
-                foreach ( Color item in ColorList)
+                foreach (Color item in ColorList)
                 {
                     if (imageList[i].ColorId == item.ColorId)
                     {
-                        if (!ColorNamesDict.ContainsKey((imageList[i].ColorId))) { 
-                   
+                        if (!ColorNamesDict.ContainsKey((imageList[i].ColorId)))
+                        {
+
                             ColorNamesDict.Add(imageList[i].ColorId, item.ColorName);
                         }
                     }
                 }
-                
+
             }
 
-      
+
             //passing the dictionary
             ViewBag.ColorNames = ColorNamesDict;
 
@@ -256,10 +260,10 @@ namespace E_Commerce_Site.Controllers
             //save to server
             if (ImageFile != null)
             {
-                ImageFile.SaveAs(HttpContext.Server.MapPath("/Images/" + ImageFile.FileName));
+                ImageFile.SaveAs(HttpContext.Server.MapPath("https://ecommercesiteadmin.azurewebsites.net/images/" + ImageFile.FileName));
 
 
-                imgTemp.Address = "/Images/" + ImageFile.FileName;
+                imgTemp.Address = "https://ecommercesiteadmin.azurewebsites.net/images/" + ImageFile.FileName;
 
             }
 
@@ -295,7 +299,7 @@ namespace E_Commerce_Site.Controllers
 
 
             //Delete Image from Server
-            string fullPath = Request.MapPath("~\\" + img.Address);
+            string fullPath = ( img.Address);
             if (System.IO.File.Exists(fullPath))
             {
                 System.IO.File.Delete(fullPath);
@@ -344,7 +348,7 @@ namespace E_Commerce_Site.Controllers
             string ColorListSelect = form["ColorListSelect"];
             string ImagePositionsListSelect = form["ImagePositionsListSelect"];
 
-       
+
             Image img = new Image()
             {
 
@@ -358,7 +362,7 @@ namespace E_Commerce_Site.Controllers
                 ImageFile.SaveAs(HttpContext.Server.MapPath("/Images/" + ImageFile.FileName));
 
 
-                img.Address = "/Images/" + ImageFile.FileName;
+                img.Address = "https://ecommercesiteadmin.azurewebsites.net/images/" + ImageFile.FileName;
 
             }
 
@@ -387,7 +391,7 @@ namespace E_Commerce_Site.Controllers
 
 
             //Delete Image from Server
-            string fullPath = Request.MapPath("~\\" + img.Address);
+            string fullPath = (img.Address);
             if (System.IO.File.Exists(fullPath))
             {
                 System.IO.File.Delete(fullPath);
@@ -405,7 +409,6 @@ namespace E_Commerce_Site.Controllers
         {
             product.ImageList = TempData["ImageList"] as List<Image>;
             TempData.Keep();
-
             product.TagList = db.Tags.ToList();
 
 
@@ -452,9 +455,6 @@ namespace E_Commerce_Site.Controllers
 
             //passing the dictionary
             ViewBag.ColorNames = ColorNamesDict;
-
-
-
 
             ViewBag.SubCategoryId = new SelectList(db.SubCategories, "SubCategoryId", "SubCategoryName", product.SubCategoryId);
             ModelState.Clear();
@@ -639,12 +639,13 @@ namespace E_Commerce_Site.Controllers
             }
 
 
-            //delete images also
-            Image image = db.Images.Find(id);
+        //BAD BUG There is no deletion of images from the images table,as the following code was broken.
+
+          //    Image image = db.Images.Find(id);
 
 
             db.Products.Remove(product);
-            db.Images.Remove(image);
+            //db.Images.Remove(image);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

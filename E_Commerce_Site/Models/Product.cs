@@ -16,6 +16,12 @@ namespace E_Commerce_Site.Models
         [Required]
         [StringLength(400)]
         public String ProductName { get; set; }
+
+        internal Product Where(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
+
         [DisplayName("Canadian Price")]
         public decimal PriceCad { get; set; }
         [DisplayName("Rupee Price")]
